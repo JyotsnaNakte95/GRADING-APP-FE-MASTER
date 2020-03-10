@@ -1,0 +1,12 @@
+
+* {
+  box-sizing: content-box; 
+}
+
+::before {
+  box-sizing: content-box; 
+}
+
+::after {
+  box-sizing: content-box; 
+}
