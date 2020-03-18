@@ -27,6 +27,7 @@ class SelectHomeworkComponent extends React.Component {
     UNSAFE_componentWillMount() {
         axios.get(`${url}availableHomework`)
         .then((response) => {
+            console.log(response);
             this.setState ({ homeworks: response.data });
         });
     }

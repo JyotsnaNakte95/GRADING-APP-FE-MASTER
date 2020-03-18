@@ -10,8 +10,8 @@ class QuestionDecriptionComponent extends React.Component {
             id: props.id,
             problemName: '',
             problemDescription: '',
-            testCaseFile: '',
-            expectedOutputFile: ''
+            testCaseFile: [],
+            expectedOutputFile: []
         }
 
         this.problemNameUpdate = this.problemNameUpdate.bind(this);
@@ -29,11 +29,14 @@ class QuestionDecriptionComponent extends React.Component {
     }
 
     testCase(e) {
-        this.setState({ testCaseFile: e.target.value });    
+        //console.log(e.target.files);
+        this.setState({ testCaseFile: Array.from(e.target.value) });
+        //console.log(testCaseFile);    
     }
 
     expectedOutput(e) {
-        this.setState({ expectedOutputFile: e.target.value });
+        //console.log(e.target.files);
+        this.setState({ expectedOutputFile: Array.from(e.target.value) });
     }
     
     
@@ -50,11 +53,11 @@ class QuestionDecriptionComponent extends React.Component {
                 </Form.Group>
                 <Form.Group controlId="formTestCase">
                     <Form.Label>Test Case File</Form.Label>
-                    <Form.Control required type="file" name="textCases" onChange={this.testCase} placeholder="Upload the test case file" />
+                    <Form.Control required type="file" name="textCases" onChange={this.testCase} placeholder="Upload the test case file" multiple/>
                 </Form.Group>
                 <Form.Group controlId="formExpectedOutput">
                     <Form.Label>Expected Output File</Form.Label>
-                    <Form.Control required type="file" name="outputFile" onChange={this.expectedOutput} placeholder="Upload the expected output file" />
+                    <Form.Control required type="file" name="outputFile" onChange={this.expectedOutput} placeholder="Upload the expected output file" multiple/>
                 </Form.Group>
             </div>
 

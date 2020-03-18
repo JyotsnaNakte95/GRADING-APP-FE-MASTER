@@ -73,9 +73,21 @@ class UploadHomeworkComponent extends React.Component {
           let prob = new FormData();
           prob.append("homeworkName", this.state.homeworkName);
           prob.append("problemName",document.getElementById(i).getElementsByTagName("input")[0].value);
+
           prob.append("problemDescription",document.getElementById(i).getElementsByTagName("textarea")[0].value);
-          prob.append("inputFile",document.getElementById(i).getElementsByTagName("input")[1].files[0]);
-          prob.append("outputFile",document.getElementById(i).getElementsByTagName("input")[2].files[0]);
+          let filesinputlist= document.getElementById(i).getElementsByTagName("input")[1].files;
+          for(let j=0;j<filesinputlist.length;j++){
+            prob.append("inputFile",document.getElementById(i).getElementsByTagName("input")[1].files[j]);
+          }
+          
+          //console.log(document.getElementById(i).getElementsByTagName("input")[1].files);
+          let filesoutputlist= document.getElementById(i).getElementsByTagName("input")[2].files;
+          //console.log(document.getElementById(i).getElementsByTagName("input")[2].files);
+          for(let k=0;k<filesoutputlist.length;k++){
+            prob.append("outputFile",document.getElementById(i).getElementsByTagName("input")[2].files[k]);
+          }
+          //console.log(document.getElementById(i).getElementsByTagName("input")[2].files);
+          //prob.append("outputFile",document.getElementById(i).getElementsByTagName("input")[2].files[0]);
 
           // API call to add problems to homework
           fetch(`${url}upload`, {
@@ -125,7 +137,7 @@ class UploadHomeworkComponent extends React.Component {
               })
               }
               <div className="buttons-wrapper">
-                <input type="button" className="button-style add-problem" onClick={this.addAnotherProblem} value="Add Problem"/>
+                <input type="button" className="button-style add-problem" onClick={this.addAnotherProbleTesm} value="Add Problem"/>
                 {
                   (this.state.problems.length>0) ? 
                     <input type="button" className="button-style" onClick={this.removeProblem} value="Remove Problem"/>
