@@ -13,16 +13,13 @@ class StudentSubmissionComponent extends React.Component {
         let user = props.history.location.state.username;
         let problem = props.history.location.state.problem;
         let submissionDetails = props.history.location.state.submissionDetails;
-        
+        console.log(typeof(submissionDetails));
+        console.log(submissionDetails.length);
         this.state = {
             homework: hw,
             username: user,
             problem: problem,
-            studentOutput: submissionDetails.studentOutput,
-            expectedOutput: submissionDetails.expectedOutput,
-            errorOutput: submissionDetails.errorOutput,
-            testCasePassed: submissionDetails.testCasePassed,
-            status: submissionDetails.status
+            submissionDetails: submissionDetails,
         }
 
         this.handleAnotherProblem = this.handleAnotherProblem.bind(this);
@@ -30,7 +27,7 @@ class StudentSubmissionComponent extends React.Component {
         this.handleWriteUp = this.handleWriteUp.bind(this);
 
     }
-
+   
     handleAnotherProblem() {
         this.props.history.push({
             pathname: '/uploadCode',
@@ -65,6 +62,26 @@ class StudentSubmissionComponent extends React.Component {
     render() {
 
 
+
+        // let submissionDetail = this.state.submissionDetails;
+        let submissionList = this.state.submissionDetails.length > 0
+		&& this.state.submissionDetails.map((submi) => {
+		return (
+            //<option key={i} value={item}>{item}</option>
+                  <div>              
+                <div key={submi.status}> Your Output : </div>
+                <div  className="display-box"> { submi.studentOutput } </div> <br/> 
+                <div> Expected Output :</div>
+                <div className="display-box">  { submi.expectedOutput } </div> <br/>
+                <div> 
+                    Test Case : <span className={"test-case-"+this.state.submissionDetails.testCasePassed}> 
+                        {submi.testCasePassed === true ? "PASSED" : "FAILED"} 
+                    </span> <br/>
+                </div> 
+                </div>
+        )}, this);
+//var submissionDetaill= this.state.submissionDetails;
+/*
         var yourOutput = (this.state.status === 0) ? 
         
         this.state.studentOutput.split('\n').map((item,i) => {
@@ -82,7 +99,7 @@ class StudentSubmissionComponent extends React.Component {
         var expectedOutput = this.state.expectedOutput.split('\n').map((item,i) => {
             return <pre key={i}>{ item }</pre>
         })
-
+*/
         return (
           <div className='student-code-container'>
               <Header />
@@ -93,15 +110,8 @@ class StudentSubmissionComponent extends React.Component {
                 <div className="success-message">
                     The code for <span className="problem-name">{this.state.problem}, {this.state.homework}</span> was submitted successfully!
                 </div>  <br/>
-                <div> Your Output : </div>
-                <div className="display-box"> { yourOutput } </div> <br/> 
-                <div> Expected Output :</div>
-                <div className="display-box">  { expectedOutput } </div> <br/>
-                <div> 
-                    Test Case : <span className={"test-case-"+this.state.testCasePassed}> 
-                        {this.state.testCasePassed === true ? "PASSED" : "FAILED"} 
-                    </span> <br/>
-                </div> 
+                {submissionList}
+
                 <div className="button-wrapper" >
                     <input className="submit-button" type="button" value="Upload Write-up" />
                     <input className="submit-button" type="button" onClick={this.handleAnotherProblem} value="Submit another problem" />

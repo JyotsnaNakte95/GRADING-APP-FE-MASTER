@@ -137,7 +137,7 @@ class UploadHomeworkComponent extends React.Component {
               })
               }
               <div className="buttons-wrapper">
-                <input type="button" className="button-style add-problem" onClick={this.addAnotherProbleTesm} value="Add Problem"/>
+                <input type="button" className="button-style add-problem" onClick={this.addAnotherProblem} value="Add Problem"/>
                 {
                   (this.state.problems.length>0) ? 
                     <input type="button" className="button-style" onClick={this.removeProblem} value="Remove Problem"/>

@@ -72,8 +72,8 @@ class StudentsHomeworkComponent extends React.Component {
                             <td></td> 
                             <td>{item}</td>
                             <td>{dates[i][j]}</td>
-                            <td>{marks[i][j] == -1 ? "Not Graded": "Graded"}</td>
-                            <td>{marks[i][j] == -1 ? "-": marks[i][j]}</td>
+                            <td>{marks[i][j] === -1 ? "Not Graded": "Graded"}</td>
+                            <td>{marks[i][j] === -1 ? "-": marks[i][j]}</td>
                         </tr>
                     </Fragment>
                 )
