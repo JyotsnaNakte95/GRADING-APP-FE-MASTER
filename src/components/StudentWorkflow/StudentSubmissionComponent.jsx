@@ -28,6 +28,8 @@ class StudentSubmissionComponent extends React.Component {
 
     }
    
+
+    
     handleAnotherProblem() {
         this.props.history.push({
             pathname: '/uploadCode',
