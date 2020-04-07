@@ -10,6 +10,8 @@ class QuestionDecriptionComponent extends React.Component {
             id: props.id,
             problemName: '',
             problemDescription: '',
+            //algoTypes:'',
+            //solutionTypes: [],
             testCaseFile: [],
             expectedOutputFile: []
         }
@@ -18,8 +20,15 @@ class QuestionDecriptionComponent extends React.Component {
         this.problemDescription = this.problemDescription.bind(this);
         this.testCase = this.testCase.bind(this);
         this.expectedOutput = this.expectedOutput.bind(this);
+       // this.algoTypes=this.algoTypes.bind(this);
+        //this.solutionTypes=this.solutionTypes.bind(this);
     }
-    
+    /*
+    solutionTypesUpdate(index,type,value){
+        //this.state.solutionTypes[index].type=value;
+        this.setState(solutionTypes [index].type= value );
+    }
+    */
     problemNameUpdate(e) {
         this.setState({ problemName: e.target.value });
     }
@@ -38,9 +47,20 @@ class QuestionDecriptionComponent extends React.Component {
         //console.log(e.target.files);
         this.setState({ expectedOutputFile: Array.from(e.target.value) });
     }
-    
-    
+    /*
+    algoTypes(e){
+        this.setState({ algoTypes: e.target.value });  
+        
+    }
+    */
     render() {
+        /*
+        const items=[]
+        for (var i=0;i<this.state.algoTypes;i++) {
+            items.push(i);
+          }
+        console.log(items);
+        */
         return (
             <div className="question-description-container" id={this.state.id}>
                 <Form.Group controlId="formProblemName">
@@ -59,6 +79,30 @@ class QuestionDecriptionComponent extends React.Component {
                     <Form.Label>Expected Output File</Form.Label>
                     <Form.Control required type="file" name="outputFile" onChange={this.expectedOutput} placeholder="Upload the expected output file" multiple/>
                 </Form.Group>
+                {
+                /*
+                <Form.Group controlId="algoTypes">
+                    <Form.Label>Number Of Solution</Form.Label>
+                    <Form.Control required type="numeric" name="algoTypes" onChange={this.algoTypes} placeholder="Enter the types of solution" />
+                </Form.Group>
+
+                {(this.state.algoTypes > 0) && (
+                
+                <div>
+                 { items.map((index) => (  
+                <Form.Group controlId="">
+                    <Form.Label>Type Of Solution</Form.Label>
+                    <Form.Control required type="textarea" name="" onChange= {value =>solutionTypesUpdate(index,"typesolu", value )}  placeholder="Enter the types of solution" />
+                    <Form.Label> Duration</Form.Label>
+                    <Form.Control required type="textarea" name="" placeholder="Enter the types of solution" />
+                </Form.Group>
+                )) }
+                    </div>
+                    
+                    
+                    )}
+                */
+                 }
             </div>
 
         );

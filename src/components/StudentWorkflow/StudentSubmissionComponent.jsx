@@ -1,4 +1,8 @@
 import React from 'react';
+//import { PureComponent } from 'react';
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  } from 'recharts';
 import Header from '../HeaderComponent/HeaderComponent';
 import SubHeader from '../SubHeaderComponent/SubHeaderComponent';
 import './StudentSubmissionComponent.scss';
@@ -64,6 +68,79 @@ class StudentSubmissionComponent extends React.Component {
     render() {
 
 
+        const data = [
+            {
+              testcasenumber: 1, proftime:0 ,
+            },
+            {
+                testcasenumber: 2, proftime: 0,
+            },
+            {
+                testcasenumber: 3, proftime: 0,
+            },
+            {
+                testcasenumber: 4, proftime: 1,
+            },
+            {
+                testcasenumber: 5, proftime: 1,
+            },
+            {
+                testcasenumber: 6, proftime: 1,
+            },
+            {
+                testcasenumber: 7, proftime: 0,
+            },
+            {
+                testcasenumber: 8, proftime: 0,
+            },
+            {
+                testcasenumber: 9, proftime: 1,
+            },
+            {
+                testcasenumber: 10, proftime: 1,
+            },
+            {
+                testcasenumber: 11, proftime: 1,
+            },
+            {
+                testcasenumber: 12, proftime: 9,
+            },
+            {
+                testcasenumber: 13, proftime: 194,
+            },
+            {
+                testcasenumber: 14, proftime: 231 ,
+            },
+          ];
+
+
+            let durationData = [];
+            let noOfpassed=0;
+            if(this.state.submissionDetails.length > 0){
+                console.log(this.state.submissionDetails);
+                let testdatalist=this.state.submissionDetails;
+                var maxtime=0;
+                for(var k=0;k<testdatalist.length;k++){
+                    if(testdatalist[k].testCasePassed === true){
+                        noOfpassed++;
+                        var durationobject = {noOfTestCase: k+1, studentduration: testdatalist[k].duration, profduration: data[k].proftime};
+                        durationData.push(durationobject);
+                        var difference= testdatalist[k].duration - data[k].proftime;
+                        if(difference>maxtime){
+                            maxtime= difference;
+                        }
+                    }
+                   
+                }
+            }
+            console.log(durationData);
+            console.log(maxtime);
+            var feedback="Good Job!!! The problem seems to be solved using dynamic programming.";
+            if(maxtime > 300){
+                    feedback="The problem looks solved using greedy solution and not dynamic programming.";
+            }
+
+
 
         // let submissionDetail = this.state.submissionDetails;
         let submissionList = this.state.submissionDetails.length > 0
@@ -101,6 +178,8 @@ class StudentSubmissionComponent extends React.Component {
         var expectedOutput = this.state.expectedOutput.split('\n').map((item,i) => {
             return <pre key={i}>{ item }</pre>
         })
+
+         <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
 */
         return (
           <div className='student-code-container'>
@@ -111,6 +190,33 @@ class StudentSubmissionComponent extends React.Component {
               <div className="student-submission-form">
                 <div className="success-message">
                     The code for <span className="problem-name">{this.state.problem}, {this.state.homework}</span> was submitted successfully!
+                </div>  <br/>
+                <div className="success-message">
+        The number of test cases passed are <span className="problem-name">{noOfpassed}</span> out of <span className="problem-name">{this.state.submissionDetails.length}</span> successfully!
+                </div>  <br/>
+        
+
+
+                <LineChart
+        width={700}
+        height={450}
+        data={durationData}
+        margin={{
+          top: 5, right: 30, left: 20, bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="noOfTestCase" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="studentduration" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="profduration" stroke="#82ca9d" />
+       
+      </LineChart>
+
+      <div className="success-message">
+       FEEDBACK: <span className="problem-name">{feedback}</span> 
                 </div>  <br/>
                 {submissionList}
 
