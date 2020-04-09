@@ -111,6 +111,31 @@ class StudentSubmissionComponent extends React.Component {
             {
                 testcasenumber: 14, proftime: 231 ,
             },
+            {
+                testcasenumber: 15, proftime: 1 ,
+            },
+            {
+                testcasenumber: 16, proftime: 1 ,
+            },
+            {
+                testcasenumber: 17, proftime: 1 ,
+            },
+            {
+                testcasenumber: 18, proftime: 1 ,
+            },
+            {
+                testcasenumber: 19, proftime: 1 ,
+            },
+            {
+                testcasenumber: 20, proftime: 1 ,
+            },
+            {
+                testcasenumber: 21, proftime: 1 ,
+            },
+            {
+                testcasenumber: 22, proftime:  1,
+            },
+
           ];
 
 
@@ -123,21 +148,22 @@ class StudentSubmissionComponent extends React.Component {
                 for(var k=0;k<testdatalist.length;k++){
                     if(testdatalist[k].testCasePassed === true){
                         noOfpassed++;
+                    }
                         var durationobject = {noOfTestCase: k+1, studentduration: testdatalist[k].duration, profduration: data[k].proftime};
                         durationData.push(durationobject);
                         var difference= testdatalist[k].duration - data[k].proftime;
                         if(difference>maxtime){
                             maxtime= difference;
                         }
-                    }
+                    
                    
                 }
             }
             console.log(durationData);
             console.log(maxtime);
             var feedback="Good Job!!! The problem seems to be solved using dynamic programming.";
-            if(maxtime > 300){
-                    feedback="The problem looks solved using greedy solution and not dynamic programming.";
+            if(maxtime > 300 || noOfpassed < this.state.submissionDetails.length){
+                    feedback="The problem looks solved using greedy algorithm. Try another approach.";
             }
 
 
