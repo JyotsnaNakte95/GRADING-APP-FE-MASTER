@@ -1,7 +1,7 @@
 import React from 'react';
 //import { PureComponent } from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, 
   } from 'recharts';
 import Header from '../HeaderComponent/HeaderComponent';
 import SubHeader from '../SubHeaderComponent/SubHeaderComponent';
@@ -87,6 +87,7 @@ class StudentSubmissionComponent extends React.Component {
             {
                 testcasenumber: 6, proftime: 1,
             },
+            
             {
                 testcasenumber: 7, proftime: 0,
             },
@@ -111,6 +112,7 @@ class StudentSubmissionComponent extends React.Component {
             {
                 testcasenumber: 14, proftime: 231 ,
             },
+            
             {
                 testcasenumber: 15, proftime: 1 ,
             },
@@ -162,10 +164,12 @@ class StudentSubmissionComponent extends React.Component {
             console.log(durationData);
             console.log(maxtime);
             var feedback="Good Job!!! The problem seems to be solved using dynamic programming.";
-            if(maxtime > 300 || noOfpassed < this.state.submissionDetails.length){
+            if( noOfpassed < this.state.submissionDetails.length){
                     feedback="The problem looks solved using greedy algorithm. Try another approach.";
             }
-
+            if(maxtime > 300){
+                feedback="The problem looks solved using recursive or backtracking algorithm. Try another approach.";
+            }
 
 
         // let submissionDetail = this.state.submissionDetails;
@@ -224,22 +228,27 @@ class StudentSubmissionComponent extends React.Component {
 
 
                 <LineChart
-        width={700}
-        height={450}
+        width={800}
+        height={500}
         data={durationData}
         margin={{
           top: 5, right: 30, left: 20, bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="noOfTestCase" />
-        <YAxis />
+        <CartesianGrid strokeDasharray="5 5" />
+        
+        <XAxis dataKey="noOfTestCase">
+        <Label value="Number of Test- Cases" offset={-4} position="insideBottom"  />
+        </XAxis> />
+        <YAxis label={{ value: 'Execution Time', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="studentduration" stroke="#8884d8" activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey="profduration" stroke="#82ca9d" />
+        <Legend verticalAlign="top" height={36} />
+        <Line type="monotone" dataKey="studentduration" stroke="#053484" activeDot={{ r: 8 }} strokeWidth={3.5}/>
+        <Line type="monotone" dataKey="profduration" stroke="#59a016" strokeWidth={3.5}/>
        
       </LineChart>
+      
+      <br/>
 
       <div className="success-message">
        FEEDBACK: <span className="problem-name">{feedback}</span> 

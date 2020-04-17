@@ -21,13 +21,14 @@ class GradeProblemComponent extends React.Component {
             username: user,
             feedback: '',
             marks: '',
-            errorOutput: '',
-            expectedOutput: '',
-            studentOutput: '',
-            status: 1,
+            resultDetails:[],
+            //errorOutput: '',
+            //expectedOutput: '',
+            //studentOutput: '',
+            //status: 1,
             codeURL: '',
             writeupURL:'',
-            testCasePassed: false
+            //testCasePassed: false
         }
 
         this.marksUpdate = this.marksUpdate.bind(this);
@@ -42,12 +43,14 @@ class GradeProblemComponent extends React.Component {
         axios.get(
             `${url}getSubmissionFiles?homeworkName=${this.state.homework}&questionName=${this.state.problem}&userName=${this.state.username}`)
         .then((response) => {
+            console.log(response.data);
             this.setState ({
-                errorOutput: response.data.result.errorOutput,
-                expectedOutput: response.data.result.expectedOutput,
-                studentOutput: response.data.result.studentOutput,
-                status: response.data.result.status,
-                testCasePassed: response.data.result.testCasePassed,
+                resultDetails:response.data.result,
+                //errorOutput: response.data.result.errorOutput,
+                //expectedOutput: response.data.result.expectedOutput,
+                //studentOutput: response.data.result.studentOutput,
+                //status: response.data.result.status,
+                //testCasePassed: response.data.result.testCasePassed,
                 codeURL: response.data.homeworkFileName,
                 writeupURL: response.data.writeupFileName,
             })
@@ -135,6 +138,16 @@ class GradeProblemComponent extends React.Component {
     }
 
     render() {
+        let noOfpassed=0;
+        if(this.state.resultDetails.length > 0){
+            let testdatalist=this.state.resultDetails;
+                //var maxtime=0;
+                for(var k=0;k<testdatalist.length;k++){
+                    if(testdatalist[k].testCasePassed === true){
+                        noOfpassed++;
+                    }
+                }
+            }
         // var yourOutput;
         // if(this.state.status===0){
         //     yourOutput = this.state.studentOutput;
@@ -142,7 +155,24 @@ class GradeProblemComponent extends React.Component {
         //     yourOutput = this.state.errorOutput;
         // }
         // var expectedOutput=this.state.expectedOutput;
+        let submissionList = this.state.resultDetails.length > 0
+		&& this.state.resultDetails.map((submi) => {
+		return (
+            //<option key={i} value={item}>{item}</option>
+                  <div>              
+                <div key={submi.status}> Your Output : </div>
+                <div  className="display-box"> { submi.studentOutput } </div> <br/> 
+                <div> Expected Output :</div>
+                <div className="display-box">  { submi.expectedOutput } </div> <br/>
+                <div> 
+                    Test Case : <span className={"test-case-"+this.state.resultDetails.testCasePassed}> 
+                        {submi.testCasePassed === true ? "PASSED" : "FAILED"} 
+                    </span> <br/>
+                </div> 
+                </div>
+        )}, this);
 
+        /*
         var yourOutput = (this.state.status === 0) ? 
         
         this.state.studentOutput.split('\n').map((item,i) => {
@@ -160,7 +190,7 @@ class GradeProblemComponent extends React.Component {
         var expectedOutput = this.state.expectedOutput.split('\n').map((item,i) => {
             return <pre key={i}>{ item }</pre>
         })
-
+*/
         return (
           <div className='student-code-container'>
               <Header />
@@ -190,6 +220,13 @@ class GradeProblemComponent extends React.Component {
                 </div>
 
                 <br/>
+                <div className="success-message">
+        The number of test cases passed are <span className="problem-name">{noOfpassed}</span> out of <span className="problem-name">{this.state.resultDetails.length}</span> successfully!
+                </div>  <br/>
+                {submissionList}
+
+{/*
+                <br/>
                 <div> Your Output : </div>
                 <div className="display-box"> { yourOutput } </div> <br/> 
                 <div> Expected Output :</div>
@@ -199,6 +236,9 @@ class GradeProblemComponent extends React.Component {
                         {this.state.testCasePassed === true ? "PASSED" : "FAILED"} 
                     </span> <br/>
                 </div> <br /> <br />
+
+
+*/}
                 <Form.Group controlId="formMarks">
                     <Form.Label>Enter marks</Form.Label>
                     <Form.Control required type="text" name="marks" onChange={this.marksUpdate} placeholder="Enter student marks" />
